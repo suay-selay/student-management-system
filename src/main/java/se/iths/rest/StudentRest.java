@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("student")
+@Path("students")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class StudentRest {
@@ -52,11 +52,18 @@ public class StudentRest {
     @Path("{id}")
     @DELETE
     public Response deleteStudent(@PathParam("id") Long id) {
-        //Student studentToDelete = studentService.findStudentById(id);
-        //studentService.deleteStudent(studentToDelete);
         studentService.deleteStudent(id);
         return Response.ok().build();
     }
+
+    @Path("getbylastname")
+    @GET
+    public Response getByLastName(@QueryParam("lastName") String lastName) {
+        String responseString = "Här får du en lista på studenter med efternamn: " + " " + lastName;
+        return Response.ok(responseString).build();
+    }
+
+
 
 
 
