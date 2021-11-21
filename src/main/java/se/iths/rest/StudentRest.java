@@ -17,6 +17,8 @@ public class StudentRest {
     @Inject
     StudentService studentService;
 
+
+    //Create
     @Path("new")
     @POST
     public Response createStudent(Student student){
@@ -24,13 +26,7 @@ public class StudentRest {
         return Response.ok(student).build();
     }
 
-    @Path("update")
-    @PUT
-    public Response updateStudent(Student student){
-        studentService.updateStudent(student);
-        return Response.ok(student).build();
-    }
-
+    //Read
     @Path("{id}")
     @GET
     public Response getStudent(@PathParam("id") Long id) {
@@ -49,22 +45,33 @@ public class StudentRest {
         return Response.ok(foundStudent).build();
     }
 
+    @Path("getbylastname")
+    @GET
+    public Response getByLastName(@QueryParam("lastName") String lastName) {
+        List<Student> foundStudent = studentService.findStudentByLastName(lastName);
+        if (foundStudent.isEmpty()) {
+            throw new WebApplicationException(Response.status(Response.Status.NOT_FOUND)
+                    .entity("Student with lastname " + lastName + " was not found in database.").build());
+        }
+        return Response.ok(foundStudent).build();
+    }
+
+
+    //Update
+    @Path("update")
+    @PUT
+    public Response updateStudent(Student student){
+        studentService.updateStudent(student);
+        return Response.ok(student).build();
+    }
+
+
+    //Delete
     @Path("{id}")
     @DELETE
     public Response deleteStudent(@PathParam("id") Long id) {
         studentService.deleteStudent(id);
         return Response.ok().build();
     }
-
-    @Path("getbylastname")
-    @GET
-    public Response getByLastName(@QueryParam("lastName") String lastName) {
-        String responseString = "Här får du en lista på studenter med efternamn: " + " " + lastName;
-        return Response.ok(responseString).build();
-    }
-
-
-
-
 
 }

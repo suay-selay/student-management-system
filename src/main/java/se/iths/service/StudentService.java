@@ -25,13 +25,20 @@ public class StudentService {
         return entityManager.find(Student.class, id);
     }
 
-    public List<Student> getAllStudents(){
-        return entityManager.createQuery("SELECT s from Student s", Student.class ).getResultList();
-    }
-
     public void deleteStudent(Long id) {
         Student foundStudent = entityManager.find(Student.class, id);
         entityManager.remove(foundStudent);
     }
+
+    public List<Student> findStudentByLastName(String lastName){
+        return entityManager.createQuery("SELECT s from Student s WHERE s.lastName LIKE :lastName")
+                .setParameter("lastName", lastName)
+                .getResultList();
+    }
+
+    public List<Student> getAllStudents(){
+        return entityManager.createQuery("SELECT s from Student s", Student.class ).getResultList();
+    }
+
 
 }
