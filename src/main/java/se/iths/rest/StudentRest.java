@@ -1,6 +1,7 @@
 package se.iths.rest;
 
 import se.iths.entity.Student;
+import se.iths.exception.NonvalidInputException;
 import se.iths.exception.StudentDoesntExistException;
 import se.iths.service.StudentService;
 
@@ -24,9 +25,9 @@ public class StudentRest {
     @POST
     public Response createStudent(Student student){
         studentService.createStudent(student);
+        String message = "{\"A new student must have a name, lastname and email!\"}";
         if (student.getFirstName().isEmpty() || student.getLastName().isEmpty() || student.getEmail().isEmpty()) {
-            throw new NotAllowedException(Response.status(Response.Status.CONFLICT)
-                    .entity("A new Student must have a name, lastname and email").type(MediaType.APPLICATION_JSON).build());
+            throw new NonvalidInputException(message);
         }
         return Response.ok(student).build();
     }
@@ -38,7 +39,6 @@ public class StudentRest {
         Student foundStudent = studentService.findStudentById(id);
         String errorMessage = "{\"Student with ID " + id + " was not found in database.\"}";
         if (foundStudent == null) {
-            //String errorMessage = errorMessage(id);
             throw new StudentDoesntExistException(errorMessage);
         }
         return Response.ok(foundStudent).build();
@@ -61,7 +61,7 @@ public class StudentRest {
         List<Student> foundStudent = studentService.findStudentByLastName(lastName);
         if (foundStudent.isEmpty()) {
             throw new WebApplicationException(Response.status(Response.Status.NOT_FOUND)
-                    .entity("Student with lastname " + lastName + " was not found in database.").build());
+                    .entity("{\"Student with given lastname was not found in database.\"}").build());
         }
         return Response.ok(foundStudent).build();
     }
@@ -80,8 +80,13 @@ public class StudentRest {
     @Path("{id}")
     @DELETE
     public Response deleteStudent(@PathParam("id") Long id) {
+        String errorMessage = "{\"There is no student with given id!\"}";
+        if (studentService.findStudentById(id)==null){
+            throw new StudentDoesntExistException(errorMessage);
+        }
         studentService.deleteStudent(id);
-        return Response.ok().build();
+        String message = "{\"Student have been successfully deleted!\"}";
+        return Response.status(204).entity(message).build();
     }
 
 }

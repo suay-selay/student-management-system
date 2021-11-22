@@ -21,6 +21,13 @@ public class StudentService {
         entityManager.merge(student);
     }
 
+    public Student updateLastName (Long id, String lastName) {
+        Student foundStudent = entityManager.find(Student.class, id);
+            foundStudent.setFirstName(lastName);
+            return foundStudent;
+    }
+
+
     public Student findStudentById(Long id){
         return entityManager.find(Student.class, id);
     }
