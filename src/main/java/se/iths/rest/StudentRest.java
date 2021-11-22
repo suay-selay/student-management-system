@@ -1,6 +1,7 @@
 package se.iths.rest;
 
 import se.iths.entity.Student;
+import se.iths.exception.StudentDoesntExistException;
 import se.iths.service.StudentService;
 
 import javax.inject.Inject;
@@ -23,6 +24,10 @@ public class StudentRest {
     @POST
     public Response createStudent(Student student){
         studentService.createStudent(student);
+        if (student.getFirstName().isEmpty() || student.getLastName().isEmpty() || student.getEmail().isEmpty()) {
+            throw new NotAllowedException(Response.status(Response.Status.CONFLICT)
+                    .entity("A new Student must have a name, lastname and email").type(MediaType.APPLICATION_JSON).build());
+        }
         return Response.ok(student).build();
     }
 
@@ -31,9 +36,10 @@ public class StudentRest {
     @GET
     public Response getStudent(@PathParam("id") Long id) {
         Student foundStudent = studentService.findStudentById(id);
+        String errorMessage = "{\"Student with ID " + id + " was not found in database.\"}";
         if (foundStudent == null) {
-            throw new WebApplicationException(Response.status(Response.Status.NOT_FOUND)
-                    .entity("Student with ID " + id + " was not found in database.").type(MediaType.TEXT_PLAIN_TYPE).build());
+            //String errorMessage = errorMessage(id);
+            throw new StudentDoesntExistException(errorMessage);
         }
         return Response.ok(foundStudent).build();
     }
@@ -42,6 +48,10 @@ public class StudentRest {
     @GET
     public Response getAllStudents() {
         List<Student> foundStudent = studentService.getAllStudents();
+        String errorMessage = "{\"There are no students in the database yet!\"}";
+        if (foundStudent.isEmpty()) {
+            throw new StudentDoesntExistException(errorMessage);
+        }
         return Response.ok(foundStudent).build();
     }
 

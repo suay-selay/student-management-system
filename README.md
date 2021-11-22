@@ -11,3 +11,7 @@
 ● Skapa minst en egen exception
 
 ● Felhantering ska finnas för varje CRUD-metod, och felmeddelande ska returneras i JSON-format
+
+Labb 1 on Main branch
+
+
