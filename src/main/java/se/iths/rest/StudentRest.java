@@ -21,7 +21,7 @@ public class StudentRest {
 
 
     //Create
-    @Path("new")
+    @Path("")
     @POST
     public Response createStudent(Student student){
         studentService.createStudent(student);
@@ -44,7 +44,7 @@ public class StudentRest {
         return Response.ok(foundStudent).build();
     }
 
-    @Path("getall")
+    @Path("")
     @GET
     public Response getAllStudents() {
         List<Student> foundStudent = studentService.getAllStudents();
@@ -61,32 +61,58 @@ public class StudentRest {
         List<Student> foundStudent = studentService.findStudentByLastName(lastName);
         if (foundStudent.isEmpty()) {
             throw new WebApplicationException(Response.status(Response.Status.NOT_FOUND)
-                    .entity("{\"Student with given lastname was not found in database.\"}").build());
+                    .entity("{\"Student with lastname " + lastName + " was not found in database.\"}").build());
         }
         return Response.ok(foundStudent).build();
     }
 
 
     //Update
-    @Path("update")
-    @PUT
-    public Response updateStudent(Student student){
+    @Path("{id}")
+    @PATCH
+/*    public Response updateStudent(Student student){
         studentService.updateStudent(student);
         return Response.ok(student).build();
+    }*/
+
+        public Response updateStudent(@PathParam("id") Long id, @QueryParam("lastName") String lastName) {
+            Student updatedStudent = studentService.updateStudent(id, lastName);
+            return Response.ok(updatedStudent).build();
     }
+/*        String errorMessage = "{\"There is no student with given id!\"}";
+        if (studentService.findStudentById(id)==null){
+            throw new StudentDoesntExistException(errorMessage);
+        }
+        studentService.updateStudent(id, student);
+        String message = "{\"Student have been successfully updated!\"}";
+        return Response.ok(student).entity(message).build();
+    }*/
+
+
+
+/*    public Response updateStudent (Student student) {
+        if (student.getLastName() == null){
+            throw new StudentDoesntExistException("The student doesnt exist");
+        } else {
+        Student updatedStudent = studentService.updateStudent(student);
+            return Response.ok(updatedStudent).build();
+       }
+    }*/
 
 
     //Delete
     @Path("{id}")
     @DELETE
     public Response deleteStudent(@PathParam("id") Long id) {
-        String errorMessage = "{\"There is no student with given id!\"}";
-        if (studentService.findStudentById(id)==null){
+        String errorMessage = "{\"There is no student with Id: " + id + "!\"}";
+        Student foundStudent = studentService.findStudentById(id);
+        if (foundStudent != null) {
+            studentService.deleteStudent(id);
+            return Response.ok().entity("{\"Student with Id: " + id + " have been successfully deleted!\"}")
+                    .build();
+        } else {
             throw new StudentDoesntExistException(errorMessage);
         }
-        studentService.deleteStudent(id);
-        String message = "{\"Student have been successfully deleted!\"}";
-        return Response.status(204).entity(message).build();
     }
 
 }

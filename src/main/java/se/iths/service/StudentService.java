@@ -17,7 +17,7 @@ public class StudentService {
         entityManager.persist(student);
     }
 
-    public void updateStudent(Student student){
+    public void updateStudent(Long id, Student student){
         entityManager.merge(student);
     }
 
@@ -48,4 +48,9 @@ public class StudentService {
     }
 
 
+    public Student updateStudent(Long id, String lastName) {
+        Student foundStudent = entityManager.find(Student.class, id);
+        foundStudent.setLastName(lastName);
+        return entityManager.merge(foundStudent);
+    }
 }
