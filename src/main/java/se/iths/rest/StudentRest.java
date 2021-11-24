@@ -24,15 +24,22 @@ public class StudentRest {
     @Path("")
     @POST
     public Response createStudent(Student student){
-        studentService.createStudent(student);
-        String message = "{\"A new student must have a name, lastname and email!\"}";
-        if (student.getFirstName().isEmpty() || student.getLastName().isEmpty() || student.getEmail().isEmpty()) {
-            throw new NonvalidInputException(message);
+        //String errorMessage = "{\"A new student must have a firstname, a lastname and an email!\"}";
+        if (student.getFirstName().isEmpty()) {
+            throw new NonvalidInputException("{\"A new student must have a firstname!\"}");
         }
-        return Response.ok(student).build();
+        if (student.getLastName().isEmpty()){
+            throw new NonvalidInputException("{\"A new student must have a lastname!\"}");
+        }
+        if (student.getEmail().isEmpty()){
+            throw new NonvalidInputException("{\"A new student must have an email!\"}");
+        }
+        studentService.createStudent(student);
+        return Response.ok(student).status(Response.Status.CREATED).build();
     }
 
-    //Read
+
+        //Read
     @Path("{id}")
     @GET
     public Response getStudent(@PathParam("id") Long id) {
