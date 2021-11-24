@@ -46,7 +46,7 @@ public class StudentRest {
         if (foundStudent == null) {
             throw new StudentDoesntExistException(errorMessage);
         }
-        return Response.ok(foundStudent).build();
+        return Response.ok(foundStudent).status(Response.Status.FOUND).build();
     }
 
     @Path("")
@@ -57,7 +57,7 @@ public class StudentRest {
         if (foundStudent.isEmpty()) {
             throw new StudentDoesntExistException(errorMessage);
         }
-        return Response.ok(foundStudent).build();
+        return Response.ok(foundStudent).status(Response.Status.FOUND).build();
     }
 
     @Path("getbylastname")
@@ -68,7 +68,7 @@ public class StudentRest {
             throw new WebApplicationException(Response.status(Response.Status.NOT_FOUND)
                     .entity("{\"Student with lastname " + lastName + " was not found in database.\"}").build());
         }
-        return Response.ok(foundStudent).build();
+        return Response.ok(foundStudent).status(Response.Status.FOUND).build();
     }
 
     //Update
@@ -80,7 +80,7 @@ public class StudentRest {
             throw new StudentDoesntExistException(errorMessage);
         }
         Student updatedStudent = studentService.updateStudent(id, lastName);
-            return Response.ok(updatedStudent).build();
+            return Response.ok(updatedStudent).status(Response.Status.OK).build();
     }
 
     //Delete
@@ -92,7 +92,7 @@ public class StudentRest {
         if (foundStudent != null) {
             studentService.deleteStudent(id);
             return Response.ok().entity("{\"Student with Id: " + id + " have been successfully deleted!\"}")
-                    .build();
+                    .status(Response.Status.NO_CONTENT).build();
         } else {
             throw new StudentDoesntExistException(errorMessage);
         }
