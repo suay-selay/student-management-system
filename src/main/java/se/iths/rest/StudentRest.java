@@ -24,7 +24,6 @@ public class StudentRest {
     @Path("")
     @POST
     public Response createStudent(Student student){
-        //String errorMessage = "{\"A new student must have a firstname, a lastname and an email!\"}";
         if (student.getFirstName().isEmpty()) {
             throw new NonvalidInputException("{\"A new student must have a firstname!\"}");
         }
@@ -38,8 +37,7 @@ public class StudentRest {
         return Response.ok(student).status(Response.Status.CREATED).build();
     }
 
-
-        //Read
+    //Read
     @Path("{id}")
     @GET
     public Response getStudent(@PathParam("id") Long id) {
@@ -73,39 +71,17 @@ public class StudentRest {
         return Response.ok(foundStudent).build();
     }
 
-
     //Update
     @Path("{id}")
     @PATCH
-/*    public Response updateStudent(Student student){
-        studentService.updateStudent(student);
-        return Response.ok(student).build();
-    }*/
-
-        public Response updateStudent(@PathParam("id") Long id, @QueryParam("lastName") String lastName) {
-            Student updatedStudent = studentService.updateStudent(id, lastName);
-            return Response.ok(updatedStudent).build();
-    }
-/*        String errorMessage = "{\"There is no student with given id!\"}";
+    public Response updateStudent(@PathParam("id") Long id, @QueryParam("lastName") String lastName) {
+        String errorMessage = "{\"There is no student with ID: " + id + "!\"}";
         if (studentService.findStudentById(id)==null){
             throw new StudentDoesntExistException(errorMessage);
         }
-        studentService.updateStudent(id, student);
-        String message = "{\"Student have been successfully updated!\"}";
-        return Response.ok(student).entity(message).build();
-    }*/
-
-
-
-/*    public Response updateStudent (Student student) {
-        if (student.getLastName() == null){
-            throw new StudentDoesntExistException("The student doesnt exist");
-        } else {
-        Student updatedStudent = studentService.updateStudent(student);
+        Student updatedStudent = studentService.updateStudent(id, lastName);
             return Response.ok(updatedStudent).build();
-       }
-    }*/
-
+    }
 
     //Delete
     @Path("{id}")
