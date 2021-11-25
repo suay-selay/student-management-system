@@ -1,11 +1,16 @@
 # JAVA EE / JAX-RS - Labb 1 on Main branch
+# JAVA EE / JAX-RS - Labb 2 on Labb2 branch
 
-● CRUD-funktionalitet ska implementeras (Create, Read, Update, Delete)
-● Data om en student ska kunna hämtas med efternamn som en Query Parameter
-● När en ny student ska läggas till, är alla fält obligatoriska utom telefonnummer
-● Anropen ska returnera meningsfulla Response Codes
-● Skapa minst en egen exception
-● Felhantering ska finnas för varje CRUD-metod, och felmeddelande ska returneras i JSON-format
+● Lägg till två entiteter, Subject (ämne) och Teacher (lärare).
+
+● En student ska kunna ha flera ämnen.
+
+● Ett ämne har flera studenter och en lärare.
+
+● En lärare ska kunna ha flera ämnen.
+
+● Det ska finnas möjlighet att via en endpoint få fullständig information om ett ämne
+(det vill säga en lista på deltagande studenter, samt vem som är lärare).
 
 ENDPOINTS (CRUD)
 
