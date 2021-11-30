@@ -1,13 +1,13 @@
 package se.iths.entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.json.bind.annotation.JsonbTransient;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -27,8 +27,26 @@ public class Student {
     @NotEmpty
     @Email(message = "Email should be valid")
     private String email;
-
     private String phoneNumber;
+
+    @ManyToMany(mappedBy = "students", cascade = CascadeType.ALL)
+    private List<Subject> subjects = new ArrayList<>();
+
+    public Student() {}
+
+ /*   public void addSubject(Subject subject){
+        subjects.add(subject);
+        subjects.setTeacher(this);
+    }*/
+
+
+    public Student(String firstName, String lastName, String email, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+
 
     public Long getId() {
         return id;
@@ -68,5 +86,14 @@ public class Student {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    @JsonbTransient
+    public List<Subject> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(List<Subject> subjects) {
+        this.subjects = subjects;
     }
 }
