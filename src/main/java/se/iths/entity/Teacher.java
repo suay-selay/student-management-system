@@ -21,8 +21,7 @@ public class Teacher {
     @NotEmpty
     private String phoneNumber;
 
-    @OneToMany
-//    (mappedBy = "teacher", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
     private List<Subject> subjects = new ArrayList<>();
 
 
@@ -31,13 +30,12 @@ public class Teacher {
         //subjects.setTeacher(this);
     }
 
-/*    public Teacher(Long id, String firstName, String lastName, String email, String phoneNumber) {
-        this.id = id;
+    public Teacher(String firstName, String lastName, String email, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-    }*/
+    }
 
     public Teacher() {}
 

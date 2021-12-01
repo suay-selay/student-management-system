@@ -17,7 +17,6 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    // Constraint, förhindrar att ett namn med mindre än 2 bokstäver anges
     @NotEmpty
     @Size(min = 2)
     private String firstName;

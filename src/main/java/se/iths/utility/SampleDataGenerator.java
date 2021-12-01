@@ -32,11 +32,9 @@ import javax.persistence.PersistenceContext;
             Subject sub2 = new Subject("Math");
             Subject sub3 = new Subject("Religion");
 
-            Teacher tea1 = new Teacher
-            Teacher tea2 = new Teacher
+            Teacher tea1 = new Teacher("Ingrid", "Malmgren", "im@hotmail.com", "0721-567890");
+            Teacher tea2 = new Teacher("Niklas", "Ingemar", "ni@hotmail.com", "0721-567888");
 
-            //("Ingrid", "Malmgren", "im@hotmail.com", "0721-567890");
-            //("Niklas", "Ingemar", "ni@hotmail.com", "0721-567888");
 
             sub1.addStudent(stu1);
             sub1.addStudent(stu2);

@@ -18,8 +18,11 @@ public class Subject {
     @ManyToMany
     private List<Student> students = new ArrayList<>();
 
-    @ManyToOne
+/*    @ManyToOne
     @JoinColumn(name = "teacher_id")
+    private Teacher teacher;*/
+
+    @ManyToOne
     private Teacher teacher;
 
     public Teacher getTeacher() {
