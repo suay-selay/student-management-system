@@ -14,13 +14,11 @@ public class Subject {
     @NotEmpty
     private String subjectName;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Teacher teacher;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+
 
     @JoinTable(name = "student_subject",
         joinColumns = @JoinColumn(name = "subject_id"),
