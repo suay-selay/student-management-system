@@ -1,16 +1,5 @@
-# JAVA EE / JAX-RS - Labb 1 on Main branch
-# JAVA EE / JAX-RS - Labb 2 on Labb2 branch
-
-● Lägg till två entiteter, Subject (ämne) och Teacher (lärare).
-
-● En student ska kunna ha flera ämnen.
-
-● Ett ämne har flera studenter och en lärare.
-
-● En lärare ska kunna ha flera ämnen.
-
-● Det ska finnas möjlighet att via en endpoint få fullständig information om ett ämne
-(det vill säga en lista på deltagande studenter, samt vem som är lärare).
+JAVA EE / JAX-RS - Labb 1 on Main branch
+JAVA EE / JAX-RS - Labb 2 on Labb2 branch
 
 ENDPOINTS (CRUD)
 
@@ -28,7 +17,6 @@ JSON body:
 "email" : "sr@gmail.com",
 "phoneNumber": "1234567899"
 }
-
 
 _**Read**_
 
@@ -64,3 +52,10 @@ _**Delete_**
 @DELETE
 
 http://localhost:8080/student-management-system/api/v1/students/1
+
+
+@GET
+
+_Get Subject including Teacher and Students who have that subject_
+
+http://localhost:8080/student-management-system/api/v1/subjects

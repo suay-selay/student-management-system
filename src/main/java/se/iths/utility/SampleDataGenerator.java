@@ -40,37 +40,6 @@ import javax.persistence.PersistenceContext;
             sub1.addStudent(stu2);
             sub1.setTeacher(tea1);
 
-//            tea1.addSubject(sub1);
-//            tea2.addSubject(sub2);
-//            tea2.addSubject(sub3);
-
-//            tea2.addSubject(sub2);
-//            tea2.addSubject(sub1);
-//            tea2.addSubject(sub3);
-
-//            stu1.addSubject(sub1);
-//            stu2.addSubject(sub1);
-//            stu3.addSubject(sub1);
-//
-//           stu4.addSubject(sub2);
-//            stu5.addSubject(sub2);
-//            stu6.addSubject(sub2);
-//
-//            stu1.addSubject(sub3);
-//            stu3.addSubject(sub3);
-//            stu5.addSubject(sub3);
-
-
-//            entityManager.persist(stu1);
-//            entityManager.persist(stu2);
-//            entityManager.persist(stu3);
-//            entityManager.persist(stu4);
-//            entityManager.persist(stu5);
-//            entityManager.persist(stu6);
-//
-//            entityManager.persist(tea1);
-//            entityManager.persist(tea2);
-
             entityManager.persist(sub1);
             entityManager.persist(sub2);
             entityManager.persist(sub3);

@@ -24,12 +24,6 @@ public class Teacher {
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
     private List<Subject> subjects = new ArrayList<>();
 
-
-//    public void addSubject(Subject subject){
-//        subjects.add(subject);
-//        subject.setTeacher(this);
-//    }
-
     public Teacher(String firstName, String lastName, String email, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
