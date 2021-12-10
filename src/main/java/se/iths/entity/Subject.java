@@ -1,6 +1,5 @@
 package se.iths.entity;
 
-import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
@@ -15,27 +14,34 @@ public class Subject {
     @NotEmpty
     private String subjectName;
 
-    @ManyToMany
-    private List<Student> students = new ArrayList<>();
-
-/*    @ManyToOne
-    @JoinColumn(name = "teacher_id")
-    private Teacher teacher;*/
-
     @ManyToOne
     private Teacher teacher;
+
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+
+    @JoinTable(name = "student_subject",
+        joinColumns = @JoinColumn(name = "subject_id"),
+        inverseJoinColumns = @JoinColumn(name = "student_id"))
+
+    private List<Student> students = new ArrayList<>();
 
     public Teacher getTeacher() {
         return teacher;
     }
 
+
+
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+        teacher.getSubjects().add(this);
     }
 
     public void addStudent(Student student) {
         students.add(student);
-        //students.setSubject(this);
+        student.getSubjects().add(this);
     }
 
     public Subject(String subjectName) {
@@ -60,7 +66,7 @@ public class Subject {
         this.subjectName = subjectName;
     }
 
-    @JsonbTransient
+
     public List<Student> getStudents() {
         return students;
     }

@@ -25,10 +25,10 @@ public class Teacher {
     private List<Subject> subjects = new ArrayList<>();
 
 
-    public void addSubject(Subject subject){
-        subjects.add(subject);
-        //subjects.setTeacher(this);
-    }
+//    public void addSubject(Subject subject){
+//        subjects.add(subject);
+//        subject.setTeacher(this);
+//    }
 
     public Teacher(String firstName, String lastName, String email, String phoneNumber) {
         this.firstName = firstName;
